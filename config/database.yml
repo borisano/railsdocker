@@ -19,3 +19,4 @@ ci:
 test:
   <<: *default
   database: myapp_test
+  host: localhost
