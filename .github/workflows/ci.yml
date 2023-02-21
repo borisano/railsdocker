@@ -1,4 +1,4 @@
-name: CI
+name: Ruby on Rails Tests
 
 on:
   push:
@@ -8,27 +8,32 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
 
     services:
-      postgres:
-        image: postgres:12
+      db:
+        image: postgres
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
+          POSTGRES_DB: myapp_test
         ports:
           - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Set up Ruby
-        uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1.0'
+          ruby-version: 3.1.0
       - name: Install dependencies
-        run: bundle install
-      - name: Run tests
         run: |
-          bin/rails db:create RAILS_ENV=test
-          bin/rails db:migrate RAILS_ENV=test
-          bundle exec rake
+          gem install bundler
+          bundle install
+      - name: Create test database
+        run: bin/rails db:create RAILS_ENV=test
+      - name: Run database migrations
+        run: bin/rails db:migrate RAILS_ENV=test
+      - name: Run tests
+        run: bundle exec rspec
