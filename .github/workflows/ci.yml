@@ -28,4 +28,7 @@ jobs:
       - name: Install dependencies
         run: bundle install
       - name: Run tests
-        run: bundle exec rake
+        run: |
+          bin/rails db:create RAILS_ENV=test
+          bin/rails db:migrate RAILS_ENV=test
+          bundle exec rake
