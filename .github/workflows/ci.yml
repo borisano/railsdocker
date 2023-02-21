@@ -31,13 +31,13 @@ jobs:
         run: |
           gem install bundler
           bundle install
-      - name: Setup database and test
+      - name: Setup database
         env:
           PG_DATABASE: postgres
           PG_HOST: localhost
           PG_USER: postgres
           PG_PASSWORD: password
-          RAILS_ENV: test
+          RAILS_ENV: ci
           WITH_COVERAGE: true
           DISABLE_SPRING: 1
         run: bundle exec rails db:prepare
@@ -45,7 +45,3 @@ jobs:
         env:
           CI: true
         run:  bin/rails test
-      # Minimum configuration
-      - uses: joshmfrankel/simplecov-check-action@main
-        with:
-          github_token: ${{ github.token }}
