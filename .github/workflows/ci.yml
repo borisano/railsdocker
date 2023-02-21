@@ -40,10 +40,11 @@ jobs:
           RAILS_ENV: test
           WITH_COVERAGE: true
           DISABLE_SPRING: 1
+        run: bundle exec rails db:prepare
+      - name: Run tests
+        env:
           CI: true
-        run: |
-          bundle exec rails db:prepare
-            bundle exec rake test
+        run:  bin/rails test
       - name: Create Coverage Artifact
         uses: actions/upload-artifact@v2
         with:
