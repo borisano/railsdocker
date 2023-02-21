@@ -45,8 +45,7 @@ jobs:
         env:
           CI: true
         run:  bin/rails test
-      - name: Create Coverage Artifact
-        uses: actions/upload-artifact@v2
+      # Minimum configuration
+      - uses: joshmfrankel/simplecov-check-action@main
         with:
-          name: code-coverage
-          path: coverage/
+          github_token: ${{ secrets.GITHUB_TOKEN }}
