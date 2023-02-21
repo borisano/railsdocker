@@ -19,4 +19,4 @@ ci:
 test:
   <<: *default
   database: myapp_test
-  host: <%= ENV.fetch("PG_HOST") { "db" } %>
+  host: <%= ENV['PG_HOST'] || 'db' %>
