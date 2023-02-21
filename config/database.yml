@@ -19,4 +19,4 @@ ci:
 test:
   <<: *default
   database: myapp_test
-  host: localhost
+  host: <%= ENV.fetch("PG_HOST") { "db" } %>
