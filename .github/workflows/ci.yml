@@ -34,10 +34,10 @@ jobs:
       - name: Setup database
         env:
           PG_DATABASE: postgres
-          PG_HOST: localhost
+          #PG_HOST: localhost
           PG_USER: postgres
           PG_PASSWORD: password
-          RAILS_ENV: ci
+          RAILS_ENV: test
           WITH_COVERAGE: true
           DISABLE_SPRING: 1
         run: bundle exec rails db:prepare
